@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: hudb
+      POSTGRES_USER: huuser
+      POSTGRES_PASSWORD: hupassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    environment:
+      POSTGRES_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: hudb
+      DB_USER: huuser
+      DB_PASSWORD: hupassword
+    ports:
+      - "8080:5000"
+
+volumes:
+  pgdata:
